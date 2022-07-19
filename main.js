@@ -402,4 +402,89 @@ Con el operador spread podemos solucionar esto ya que Math.max() recibirá cada 
 const numeros = [4, 77, 92, 10, 3, -32, 54, 11]
 
 console.log( Math.max(...numeros) ) // 92
+
+También podemos hacer spread de un array dentro de otras estructuras que lo admitan. 
+Esto nos permite, por ejemplo, replicar el contenido de un array dentro de otra estructura al desparramar su contenido dentro. 
+
+Si lo hacemos dentro de un objeto veremos algo interesante, que cada propiedad toma como nombre el índice de los elementos 👉
+
+const nombres1 = ["Juan", "Julieta"]
+const nombres2 = ["Carlos", "Mariela"]
+
+// spread de los dos arrays dentro de otro
+const nombres = [...nombres1, ...nombres2]
+
+console.log(nombres) // ["Juan", "Julieta", "Carlos", "Mariela"]
+
+// spread del array en un objeto
+const nombresObj = {
+    ...nombres
+}
+
+console.log(nombresObj)
+// { '0': 'Juan', '1': 'Julieta', '2': 'Carlos', '3': 'Mariela' }
+*/
+
+//--- SPREAD DE OBJETOS ---//
+/*
+Se puede hacer spread de objetos también, pero debe hacerse dentro de una estructura que lo permita, como otro objeto. 
+Un spread aplicado sobre un objeto presentaría cada par de clave-valor separado por comas, y ésto en una función no sería admisible, pero sí puede serlo dentro de otro objeto.
+Esto suele ser útil cuando queremos replicar o modificar estructuras de objetos, ya que nos permite primero listar todas sus propiedades y valores y luego modificar/agregar las que queramos:
+
+const usuario1 = {
+    nombre: "Juan",
+    edad: 24,
+    curso: "Javascript"
+}
+
+// lista todas las propiedades y valores de usuario1 dentro de otro objeto
+const usuario2 = {
+    ...usuario1
+}
+
+console.log(usuario2) // { nombre: 'Juan', edad: 24, curso: 'Javascript' }
+
+const usuario3 = {
+    ...usuario1,
+    curso: "ReactJS",
+    email: "juan@doe.com"
+}
+
+console.log(usuario3)
+// { nombre: 'Juan', edad: 24, curso: 'ReactJS', email: 'juan@doe.com' }
+
+En el último ejemplo vemos que agregamos una propiedad y que modificamos la propiedad curso. 
+
+Recordemos que no podemos tener dos propiedades con el mismo nombre, y en tal caso prevalece la última declarada, que es lo que ocurre aquí. 
+
+El spread de usuario1 lista todas las propiedades, incluida curso, dentro de usuario3, y luego la sobreescribimos con un nuevo valor.
+*/
+
+//--- REST PARAMETERS ARRAYS ---//
+/*
+El operador spread también puede utilizarse dentro de la declaración de una función para indicar que queremos recibir una cantidad indeterminada de parámetros.
+Supongamos que quiero tener una función para sumar cualquier cantidad de números que reciba por parámetro.
+
+Puedo hacer esto con el operador spread definiendo rest parameters, lo que significa que mi función va a recibir una cantidad indeterminada de parámetros, pero los va a agrupar dentro de un array con el nombre que defina, y con eso trabajará dentro:
+
+function sumar(...numeros) {
+    console.log(numeros)
+}
+
+sumar(4, 2) // [ 4, 2 ]
+sumar(10, 15, 30, 5) // [ 10, 15, 30, 5 ]
+
+Vemos que con esta sintaxis el parámetro …números se define como un array donde se guardan todos los argumentos enviados que coincidan con esa posición.
+
+De esta forma podemos escribir funciones que reciban múltiples parámetros, sin saber con precisión cuántos serán, pudiendo trabajarlos luego como un array dentro de la función.
+
+Siguiendo el ejemplo anterior, podemos tomar este array numeros y retornar la suma de todos los elementos que reciba con un reduce:
+
+function sumar(...numeros) {
+    return numeros.reduce((acc, n) => acc + n, 0)
+}
+
+console.log( sumar(4, 2) ) // 6
+console.log( sumar(10, 15, 30, 5) ) // 60
+console.log( sumar(100, 300, 50) ) // 450
 */
